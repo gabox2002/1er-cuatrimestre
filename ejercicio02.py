@@ -6,6 +6,8 @@
 # En caso de que ingrese un numero fuera del rango deberá mostrarle al usuario
 # “Error, regla de estilo inexistente”
 
+
+
 numero = int(input("Ingrese un número entre el 1 y el 8: "))
 
 if numero == 1:

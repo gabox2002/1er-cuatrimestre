@@ -18,7 +18,10 @@ if(3 > 5):
 # primer_numero =7
 # booleano = True
 
+un_numero = 7.25
 
+cadena = str(un_numero)
+print(type(cadena))
 
 # print(type(3.14)) #TYPE nos dice que tipo de variable es
 
