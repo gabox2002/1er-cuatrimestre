@@ -1,5 +1,4 @@
-'''
-Gabriel Quispe Div C Grupo 3 Ejercicio 03
+'''Gabriel Quispe Div C Grupo 3 Ejercicio 03
 Es la gala final de Gran Hermano y la producción nos pide un programa para contar
 los votos de los televidentes y saber cuál será el participante que ganará el juego.
 Los participantes finalistas son: Nacho, Julieta y Marcos.
