@@ -26,7 +26,7 @@ voto_marcos = 0
 voto_nacho = 0
 bandera_joven = True
 
-while seguir:
+while seguir == "si":
     nombre_votante = input("Ingrese su nombre: ")
     edad_votante = int(input("Ingrese su edad: "))
     while edad_votante < 13:
