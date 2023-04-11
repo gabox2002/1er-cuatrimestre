@@ -47,10 +47,4 @@ for heroe in heroes_info:
     identidad = heroe["Identidad"]
 
     print(f"ID: {id}, Codename: {nombre} \nIdentidad: {identidad}, Origen: {origen} \nHabilidades: {habilidades}")
-
-
-for i in range(5):
-    print(f"{i+1}:",end="")
-    for j in rnge (10,21,1):
-        print(f"{j},",end=")
-            print("\n")
+    
