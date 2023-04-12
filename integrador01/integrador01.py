@@ -2,25 +2,20 @@ from data_stark import lista_personajes
 from os import system
 
 def mostrar_superheroes_masculinos():
-    contador_superheroes_masculinos = 0
+    print(f"Los superheroes masculinos son: ")
     for personaje in lista_personajes: # Recorremos la lista de superhéroes
         if personaje['genero'] == "M":
-            contador_superheroes_masculinos += 1
-            print(f"{personaje['nombre']} - {personaje['genero']} ")
-    print(f"El numero de superheroes masculino es:  {contador_superheroes_masculinos}")
+            print(f"{'   ' + personaje['nombre']}")
 
 def mostrar_superheroes_femeninos():
-    contador_superheroes_femeninos = 0
+    print(f"Los superheroes femeninos son: ")
     for personaje in lista_personajes: # Recorremos la lista de superhéroes
         if personaje['genero'] == "F":
-            contador_superheroes_femeninos += 1
-            print(f"{personaje['nombre']} - {personaje['genero']} - {personaje['altura']}")
-    print(f"El numero de superheroes femeninos es:  {contador_superheroes_femeninos}")
+            print(f"{'   ' + personaje['nombre']}")
 
 def mostrar_superheroe_masculino_mas_alto():
     mas_alto = ""
     bandera_mas_alto = False
-
     for personaje in lista_personajes: # Recorremos la lista de superhéroes
         if personaje['genero'] == "M":
             if bandera_mas_alto == False or float(personaje['altura']) > mas_alto:
@@ -45,7 +40,6 @@ def mostrar_superheroe_femenino_mas_alta():
 def mostrar_superheroe_masculino_mas_bajo():
     mas_bajo = ""
     bandera_mas_bajo = False
-
     for personaje in lista_personajes: # Recorremos la lista de superhéroes
         if  personaje['genero'] == "M":
             if bandera_mas_bajo == False or float(personaje['altura']) < mas_bajo:
@@ -58,7 +52,6 @@ def mostrar_superheroe_masculino_mas_bajo():
 def mostrar_superheroe_femenino_mas_baja():
     mas_baja = ""
     bandera_mas_baja = False
-    
     for personaje in lista_personajes: # Recorremos la lista de superhéroes
         if personaje['genero'] == "F": # Si el genero del personaje es F
             if  bandera_mas_baja == False or float(personaje['altura']) < mas_baja: # Si cumple la bandera o la altura ingresada es la mas baja
@@ -71,7 +64,6 @@ def mostrar_superheroe_femenino_mas_baja():
 def mostrar_promedio_altura_masculino():
     altura_promedio_masculino = 0
     contador_masculino = 0
-
     for personaje in lista_personajes: # Recorremos la lista de superhéroes
         if personaje['genero'] == "M":
             altura_promedio_masculino += float(personaje['altura'])
@@ -79,7 +71,7 @@ def mostrar_promedio_altura_masculino():
 
     promedio_altura_masculino = altura_promedio_masculino / contador_masculino
 
-    print(f"La altura promedio de los superhéroes de género M es {promedio_altura_masculino: .2f}m")
+    print(f"La altura promedio de los superhéroes masculinos es {promedio_altura_masculino: .2f}")
 
 def mostrar_promedio_altura_femenino():
     altura_promedio_femenino = 0
@@ -92,7 +84,7 @@ def mostrar_promedio_altura_femenino():
 
     promedio_altura_femenino = altura_promedio_femenino / contador_femenino
 
-    print(f"La altura promedio de los superhéroes de género F es {promedio_altura_femenino: .2f}m")
+    print(f"La altura promedio de los superhéroes femeninos es {promedio_altura_femenino: .2f}")
 
 def mostrar_superheroe_mas_alto_mas_bajo_por_genero():
     mas_alto = ""
@@ -106,14 +98,14 @@ def mostrar_superheroe_mas_alto_mas_bajo_por_genero():
 
     for personaje in lista_personajes: # Recorremos la lista de superhéroes
         if personaje['genero'] == "M":
-                if bandera_mas_alto == False or float(personaje['altura']) > mas_alto:
-                    bandera_mas_alto = True
-                    mas_alto = float(personaje['altura'])
-                    masculino_mas_alto = personaje['nombre']
-                if bandera_mas_bajo == False or float(personaje['altura']) < mas_bajo:
-                    bandera_mas_bajo = True
-                    mas_bajo = float(personaje['altura'])
-                    masculino_mas_bajo = personaje['nombre']
+            if bandera_mas_alto == False or float(personaje['altura']) > mas_alto:
+                bandera_mas_alto = True
+                mas_alto = float(personaje['altura'])
+                masculino_mas_alto = personaje['nombre']
+            if bandera_mas_bajo == False or float(personaje['altura']) < mas_bajo:
+                bandera_mas_bajo = True
+                mas_bajo = float(personaje['altura'])
+                masculino_mas_bajo = personaje['nombre']
 
         if personaje['genero'] == "F":
             if bandera_mas_alta == False or float(personaje['altura']) > mas_alta:
@@ -126,99 +118,204 @@ def mostrar_superheroe_mas_alto_mas_bajo_por_genero():
                 femenino_mas_baja = personaje['nombre']
             
     print(f"El superheroe masculino mas alto es {masculino_mas_alto} con {mas_alto}")
-    print(f"El superheroe masculino mas bajo es {masculino_mas_bajo} con {mas_bajo}")
+    print(f"y el mas bajo es {masculino_mas_bajo} con {mas_bajo}")
     print(f"La superheroe femenina mas alta es {femenino_mas_alta} con {mas_alta}")
-    print(f"La superheroe femenina mas baja es {femenino_mas_baja} con {mas_baja}")
+    print(f"y la mas baja es {femenino_mas_baja} con {mas_baja}")
 
-def mostrar_superheroes_por_color_ojos():
-    conteo_ojos = {} # Creamos un diccionario para almacenar el conteo de cada color de ojos
-
-    for personaje in lista_personajes: # Recorremos la lista de superhéroes
-        color_ojos = personaje['color_ojos'] # Obtenemos el color de ojos del superhéroe actual
-        if color_ojos not in conteo_ojos:    
-            conteo_ojos[color_ojos] = 1     # Si el color de ojos no ha sido registrado en el diccionario, lo inicializamos con un conteo de 1
-        else:                                
-            conteo_ojos[color_ojos] += 1    # Si el color de ojos ya ha sido registrado, incrementamos su conteo en 1
-            
-    for (color, conteo) in conteo_ojos.items(): # Imprimimos el conteo de cada color de ojos (clave, valor)
-        print(f"Hay {conteo} superhéroes con ojos de color {color}.")
-
-def mostrar_superheroes_por_color_pelo():
-    conteo_color_pelo = {} #creamos el diccionario para almacenar el conteo de cada tipo de color de pelo
-
-    for personaje in lista_personajes:
-        if  personaje["color_pelo"] == "":
-            color = "No Tiene"
-        else:        
-            color = personaje["color_pelo"]
-
-        if color in conteo_color_pelo:
-            conteo_color_pelo[color] += 1 # Si el color_pelo no ha sido registrada en el diccionario, la inicializamos con una cantidad de 1
-        else:
-            conteo_color_pelo[color] = 1 # Si el color_pelo ya ha sido registrado, incrementamos su cantidad en 1
-            
-    for color, conteo in conteo_color_pelo.items():  #(clave, valor)(color es la clave, conteo el valor que toma con ese color de pelo) 
-        print(f"Hay {conteo} superhéroes con el color de pelo {color}") # Se imprime el conteo para cada color de pelo.
-
-def mostrar_superheroes_por_inteligencia():
-
-    inteligencias = {}# Inicializar el diccionario de inteligencias
-
-    for personaje in lista_personajes:
-        if personaje['inteligencia'] == '':
-            inteligencia = 'No Tiene'
-        else:
-            inteligencia = personaje['inteligencia']
-
-        if inteligencia in inteligencias:
-            inteligencias[inteligencia] += 1 # Si la inteligencia no ha sido registrada en el diccionario, la inicializamos con una cantidad de 1
-        else:
-            inteligencias[inteligencia] = 1 # Si la inteligencia ya ha sido registrado, incrementamos su cantidad en 1
-
-    for inteligencia, cantidad in inteligencias.items():
-        print(f"Hay {cantidad} superhéroes con inteligencia {inteligencia}")
-
-def listado_superheroes_por_color_ojos():
-    superheroes_por_color_ojos = {} # Crear diccionario vacío para almacenar héroes por color de ojos
-
-    for superheroe in lista_personajes:  ## Recorrer la lista de héroes y agregarlos al diccionario correspondiente al color de ojos
-        color_ojos = superheroe['color_ojos']
-        if color_ojos not in superheroes_por_color_ojos:
-            superheroes_por_color_ojos[color_ojos] = []
-        superheroes_por_color_ojos[color_ojos].append(superheroe['nombre'])
-
-    for color_ojos, superheroes in superheroes_por_color_ojos.items():  # Imprimir el resultado (color_ojos, superheroe)
-        print(f"Superhéroes con ojos de color {color_ojos}: {', '.join(superheroes)}")
-
-def listado_superheroes_por_color_pelo():
-
-    heroes_por_pelo = {} # Crear diccionario vacío para almacenar héroes por color de pelo
-
-    for superheroe in lista_personajes: # Recorrer la lista de héroes y agregarlos al diccionario correspondiente al color de pelo
-        pelo = superheroe['color_pelo'] or 'No Tiene'
-        if pelo not in heroes_por_pelo:
-            heroes_por_pelo[pelo] = []
-        heroes_por_pelo[pelo].append(superheroe['nombre'])
-
-
-    for pelo, heroes in heroes_por_pelo.items():    # Imprimir el resultado
-        print(f"Superhéroes con pelo de color {pelo}: {', '.join(heroes)}")
-
-def listado_superheroes_por_inteligencia():
+def mostrar_cantidad_superheroes_por_color_ojos():  
+    contador_ojos_brown = 0
+    contador_ojos_blue = 0  
+    contador_ojos_green = 0
+    contador_ojos_yellow_sin_irises = 0
+    contador_ojos_yellow = 0      
+    contador_ojos_hazel = 0
+    contador_ojos_silver = 0
+    contador_ojos_red = 0
     
-#O. Listar todos los superhéroes agrupados por tipo de inteligencia.
+    for personaje in lista_personajes:
+        if personaje['color_ojos'] == "Brown":
+            contador_ojos_brown += 1
+        elif personaje['color_ojos'] == "Blue" or personaje['color_ojos'] == "blue":
+            contador_ojos_blue += 1
+        elif personaje['color_ojos'] == "Green":
+            contador_ojos_green += 1
+        elif personaje['color_ojos'] == "Yellow (without irises)":
+            contador_ojos_yellow_sin_irises += 1
+        elif personaje['color_ojos'] == "Yellow":
+            contador_ojos_yellow += 1
+        elif personaje['color_ojos'] == "Hazel":
+            contador_ojos_hazel += 1
+        elif personaje['color_ojos'] == "Silver":
+            contador_ojos_silver += 1
+        elif personaje['color_ojos'] == "Red":
+            contador_ojos_red += 1
 
-    heroes_por_inteligencia = {}    # Crear diccionario vacío para almacenar héroes por tipo de inteligencia
+    print(f"La cantidad de superheroes por tipo de color de ojos es:")
+    print(f"- Brown: {contador_ojos_brown}")
+    print(f"- Blue: {contador_ojos_blue}")
+    print(f"- Green: {contador_ojos_green}")
+    print(f"- Yellow (without irises): {contador_ojos_yellow_sin_irises}")
+    print(f"- Yellow: {contador_ojos_yellow}")
+    print(f"- Hazel: {contador_ojos_hazel}")
+    print(f"- Silver: {contador_ojos_silver}")
+    print(f"- Red: {contador_ojos_red}")
 
-    for heroe in lista_personajes:  # Recorrer la lista de héroes y agregarlos al diccionario correspondiente al tipo de inteligencia
-        inteligencia = heroe['inteligencia'] or 'No Tiene'
-        if inteligencia not in heroes_por_inteligencia:
-            heroes_por_inteligencia[inteligencia] = []
-        heroes_por_inteligencia[inteligencia].append(heroe['nombre'])
+def mostrar_cantidad_superheroes_por_color_pelo():
+    contador_pelo_yellow = 0
+    contador_pelo_brown = 0
+    contador_pelo_black = 0
+    contador_pelo_auburn = 0
+    contador_pelo_red_orange = 0
+    contador_pelo_white = 0
+    contador_pelo_no_hair = 0
+    contador_pelo_blond = 0
+    contador_pelo_green = 0
+    contador_pelo_red = 0
+    contador_pelo_brown_white = 0
+    
+    for personaje in lista_personajes:
+        if personaje['color_pelo'] == "Yellow":
+            contador_pelo_yellow += 1
+        elif personaje['color_pelo'] == "Brown":
+            contador_pelo_brown += 1
+        elif personaje['color_pelo'] == "Black": 
+            contador_pelo_black += 1
+        elif personaje['color_pelo'] == "Auburn":
+            contador_pelo_auburn += 1
+        elif personaje['color_pelo'] == "Red / Orange":
+            contador_pelo_red_orange += 1
+        elif personaje['color_pelo'] == "White":
+            contador_pelo_white += 1
+        elif personaje['color_pelo'] == "No Hair" or personaje['color_pelo'] == "":
+            contador_pelo_no_hair += 1
+        elif personaje['color_pelo'] == "Blond" or personaje['color_pelo'] == "blond":
+            contador_pelo_blond += 1
+        elif personaje['color_pelo'] == "Green":
+            contador_pelo_green += 1
+        elif personaje['color_pelo'] == "Red":
+            contador_pelo_red += 1
+        elif personaje['color_pelo'] == "Brown / White":
+            contador_pelo_brown_white += 1
 
+    print(f"La cantidad de superheroes por tipo de color de pelo es: ")
+    print(f"- Yellow: {contador_pelo_yellow}")
+    print(f"- Brown: {contador_pelo_brown}")
+    print(f"- Black: {contador_pelo_black}")
+    print(f"- Auburn: {contador_pelo_auburn}")
+    print(f"- Red / Orange: {contador_pelo_red_orange}")
+    print(f"- White: {contador_pelo_white}")
+    print(f"- No Hair: {contador_pelo_no_hair}")
+    print(f"- Blond: {contador_pelo_blond}")
+    print(f"- Green: {contador_pelo_green}")
+    print(f"- Red: {contador_pelo_red}")
+    print(f"- Brown / White: {contador_pelo_brown_white}")
 
-    for inteligencia, heroes in heroes_por_inteligencia.items(): # Imprimir el resultado
-        print(f"Superhéroes con inteligencia {inteligencia}: {', '.join(heroes)}")
+def mostrar_cantidad_superheroes_por_inteligencia():
+    contador_inteligencia_good = 0
+    contador_inteligencia_high = 0
+    contador_inteligencia_average = 0
+    contador_inteligencia_no_tiene = 0
+    
+    for personaje in lista_personajes:
+        if personaje['inteligencia'] == "good":
+            contador_inteligencia_good += 1
+        if personaje['inteligencia'] == "high":
+            contador_inteligencia_high += 1
+        if personaje['inteligencia'] == "average":
+            contador_inteligencia_average += 1
+        if personaje['inteligencia'] == "":
+            contador_inteligencia_no_tiene += 1
+
+    print(f"La cantidad de superheroes por nivel de inteligencia es: ")
+    print(f"- Good: {contador_inteligencia_good}")
+    print(f"- High: {contador_inteligencia_high}")
+    print(f"- Average: {contador_inteligencia_average}")
+    print(f"- No tiene nivel de Inteligencia : {contador_inteligencia_no_tiene}")
+
+def listar_superheroes_por_color_ojos():
+    #crear un diccionario para mostrar superheroes por color de ojos
+    lista_color_ojos = {"Brown": [], "Blue": [], "Green": [], "Yellow (without irises)": [], 
+                        "Yellow": [], "Hazel": [], "Silver": [], "Red": []} 
+    ## Iterar a través de la lista de personajes y agregar a la lista correspondiente al color de ojos
+    for personaje in lista_personajes:    
+        if personaje['color_ojos'] == "Brown":
+            lista_color_ojos["Brown"].append(personaje)
+        elif personaje["color_ojos"] == "Blue" or personaje["color_ojos"] == "blue":
+            lista_color_ojos["Blue"].append(personaje)
+        elif personaje["color_ojos"] == "Green":
+            lista_color_ojos["Green"].append(personaje)
+        elif personaje["color_ojos"] == "Yellow (without irises)":
+            lista_color_ojos["Yellow (without irises)"].append(personaje)
+        elif personaje['color_ojos'] == "Yellow":
+            lista_color_ojos["Yellow"].append(personaje)
+        elif personaje["color_ojos"] == "Hazel":
+            lista_color_ojos["Hazel"].append(personaje)
+        elif personaje["color_ojos"] == "Silver":
+            lista_color_ojos["Silver"].append(personaje)
+        elif personaje["color_ojos"] == "Red":
+            lista_color_ojos["Red"].append(personaje)
+    
+    print("Listado de superheroes agrupados por color de ojos: ")        
+    for color in lista_color_ojos:        
+        print("-" + color + ":")
+        for personaje in lista_color_ojos[color]:
+            print("    " + personaje["nombre"])
+        
+def listar_superheroes_por_color_pelo():
+
+    # Crear diccionario vacío para almacenar héroes por color de pelo
+    lista_color_pelo = {"Yellow": [], "Brown": [], "White": [], "Auburn": [], "Red / Orange": [], "Red": [],
+                        "Black": [], "Green": [], "No Hair": [], "Blond": [], "Brown / White": []} 
+    ## Iterar a través de la lista de personajes y agregar a la lista correspondiente al color de ojos
+    for personaje in lista_personajes:    
+        if personaje['color_pelo'] == "Yellow":
+            lista_color_pelo["Yellow"].append(personaje)
+        elif personaje['color_pelo'] == "Brown":
+            lista_color_pelo["Brown"].append(personaje)
+        elif personaje['color_pelo'] == "Auburn":
+            lista_color_pelo["Auburn"].append(personaje)
+        elif personaje['color_pelo'] == "Red / Orange":
+            lista_color_pelo["Red / Orange"].append(personaje)
+        elif personaje["color_pelo"] == "White":
+            lista_color_pelo["White"].append(personaje)
+        elif personaje["color_pelo"] == "Black":
+            lista_color_pelo["Black"].append(personaje)
+        elif personaje["color_pelo"] == "Green":
+            lista_color_pelo["Green"].append(personaje)
+        elif personaje["color_pelo"] == "Brown / White":
+            lista_color_pelo["Brown / White"].append(personaje)
+        elif personaje["color_pelo"] == "No Hair" or personaje["color_pelo"] == "":
+            lista_color_pelo["No Hair"].append(personaje)
+        elif personaje['color_pelo'] == "Blond" or personaje['color_pelo'] == "blond":
+            lista_color_pelo["Blond"].append(personaje)
+        elif personaje["color_pelo"] == "Red":
+            lista_color_pelo["Red"].append(personaje)
+    
+    print("Listado de superheroes agrupados por color de pelo: ")        
+    for color in lista_color_pelo:        
+        print("-" + color + ":")
+        for personaje in lista_color_pelo[color]:
+            print("    " + personaje["nombre"])
+
+def listar_superheroes_por_inteligencia():
+    #Crear diccionario vacío para almacenar héroes por tipo de inteligencia
+    lista_inteligencia = {"High": [], "Good": [], "Average": [], "No tiene": []} 
+    ## Iterar a través de la lista de personajes y agregar a la lista correspondiente a la inteligencia
+    for personaje in lista_personajes:  
+        if personaje['inteligencia'] == "high":
+            lista_inteligencia["High"].append(personaje)
+        elif personaje['inteligencia'] == "good":
+            lista_inteligencia["Good"].append(personaje)
+        elif personaje['inteligencia'] == "average":
+            lista_inteligencia["Average"].append(personaje)
+        elif personaje['inteligencia'] == "":
+            lista_inteligencia["No tiene"].append(personaje)
+    
+    print("Listado de superheroes agrupados por nivel de inteligencia: ")        
+    for inteligencia in lista_inteligencia:        
+        print("-" + inteligencia + ":")
+        for personaje in lista_inteligencia[inteligencia]:
+            print("    " + personaje["nombre"])
 
 system("cls")
 while True:
@@ -243,207 +340,17 @@ while True:
         case 9:
             mostrar_superheroe_mas_alto_mas_bajo_por_genero()
         case 10:
-            mostrar_superheroes_por_color_ojos()
+            mostrar_cantidad_superheroes_por_color_ojos()
         case 11:
-            mostrar_superheroes_por_color_pelo()
+            mostrar_cantidad_superheroes_por_color_pelo()
         case 12:
-            mostrar_superheroes_por_inteligencia()
+            mostrar_cantidad_superheroes_por_inteligencia()
         case 13:
-            listado_superheroes_por_color_ojos()
+            listar_superheroes_por_color_ojos()
         case 14:
-            listado_superheroes_por_color_pelo()
+            listar_superheroes_por_color_pelo()
         case 15:
-            listado_superheroes_por_inteligencia()
+            listar_superheroes_por_inteligencia()
         case 16:
             break
         
-
-
-
-
-
-
-# ###A. Recorrer la lista imprimiendo por consola el nombre de cada superhéroe de género M
-# for personaje in lista_personajes: # Recorremos la lista de superhéroes
-#     if personaje['genero'] == "M":
-#         print(f"{personaje['nombre']} - {personaje['genero']} ")
-
-
-# ###B. Recorrer la lista imprimiendo por consola el nombre de cada superhéroe de género F
-# for personaje in lista_personajes: # Recorremos la lista de superhéroes
-#     if personaje['genero'] == "F":
-#         print(f"{personaje['nombre']} - {personaje['genero']} ")
-
-# ###C. Recorrer la lista y determinar cuál es el superhéroe más alto de género M
-# mas_alto = 0
-# bandera_mas_alto = False
-
-# for personaje in lista_personajes: # Recorremos la lista de superhéroes
-#     if personaje['genero'] == "M":
-#         if bandera_mas_alto == False or float(personaje['altura']) > mas_alto:
-#             bandera_mas_alto = True
-#             mas_alto = float(personaje['altura'])
-#             masculino_mas_alto = personaje['nombre']
-
-# print(f"El personaje masculino mas alto es {masculino_mas_alto} con {mas_alto}m")
-
-# ###D. Recorrer la lista y determinar cuál es el superhéroe más alto de género F
-# mas_alta = 0
-# bandera_mas_alta = False
-# for personaje in lista_personajes: # Recorremos la lista de superhéroes
-#     if personaje['genero'] == "F":        
-#         if bandera_mas_alta == False or float(personaje['altura']) > mas_alta:
-#             mas_alta = float(personaje['altura'])
-#             femenino_mas_alta = personaje['nombre']
-#             bandera_mas_alta = True
-        
-# print(f"La personaje femenino mas alta es {femenino_mas_alta} con {mas_alta}m")
-
-# ###E. Recorrer la lista y determinar cuál es el superhéroe más bajo de género M
-# mas_bajo = 0
-# bandera_mas_bajo = False
-
-# for personaje in lista_personajes: # Recorremos la lista de superhéroes
-#     if  personaje['genero'] == "M":
-#         if bandera_mas_bajo == False or float(personaje['altura']) < mas_bajo:
-#             bandera_mas_bajo = True
-#             mas_bajo = float(personaje['altura'])
-#             masculino_mas_bajo = personaje['nombre']
-
-# print(f"El personaje masculino mas bajo es {masculino_mas_bajo} con {mas_bajo}m")
-
-# ###F. Recorrer la lista y determinar cuál es el superhéroe más bajo de género F
-# mas_baja = 0
-# bandera_mas_baja = False
-
-# for personaje in lista_personajes: # Recorremos la lista de superhéroes
-#     if personaje['genero'] == "F": # Si el genero del personaje es F
-#         if bandera_mas_baja == False or float(personaje['altura']) < mas_baja: # Si cumple la bandera o la altura ingresada es la mas baja
-#             bandera_mas_baja = True
-#             mas_baja = float(personaje['altura'])
-#             femenino_mas_baja = personaje['nombre']
-
-# print(f"La personaje femenino mas baja es {femenino_mas_baja} con {mas_baja}m")
-
-# ###G. Recorrer la lista y determinar la altura promedio de los superhéroes de género M
-# altura_promedio_masculino = 0
-# contador_masculino = 0
-
-# for personaje in lista_personajes: # Recorremos la lista de superhéroes
-#     if personaje['genero'] == "M":
-#         altura_promedio_masculino += float(personaje['altura'])
-#         contador_masculino += 1
-
-# promedio_altura_masculino = altura_promedio_masculino / contador_masculino
-
-# print(f"La altura promedio de los superhéroes de género M es {promedio_altura_masculino: .2f}m")
-
-# ###H. Recorrer la lista y determinar la altura promedio de los superhéroes de género F
-# altura_promedio_femenino = 0
-# contador_femenino = 0
-
-# for personaje in lista_personajes: # Recorremos la lista de superhéroes
-#     if personaje['genero'] == "F":
-#         altura_promedio_femenino += float(personaje['altura'])
-#         contador_femenino += 1
-
-# promedio_altura_femenino = altura_promedio_femenino / contador_femenino
-
-# print(f"La altura promedio de los superhéroes de género F es {promedio_altura_femenino: .2f}m")
-
-# ###I. Informar cual es el Nombre del superhéroe asociado a cada uno de los indicadores anteriores (ítems C a F)
-# for personaje in lista_personajes: # Recorremos la lista de superhéroes
-#     if float(personaje['altura']) == mas_alto:
-#         print(f"El superheroe masculino mas alto es {personaje['nombre']} con {float(personaje['altura'])}m")
-
-#     if float(personaje['altura']) == mas_alta:
-#         print(f"El superheroe femenino mas alta es {personaje['nombre']} con {float(personaje['altura'])}m")
-
-# ###J. Determinar cuántos superhéroes tienen cada tipo de color de ojos.
-# conteo_ojos = {} # Creamos un diccionario para almacenar el conteo de cada color de ojos
-
-# for personaje in lista_personajes: # Recorremos la lista de superhéroes
-#     color_ojos = personaje['color_ojos'] # Obtenemos el color de ojos del superhéroe actual
-#     if color_ojos not in conteo_ojos:    
-#         conteo_ojos[color_ojos] = 1     # Si el color de ojos no ha sido registrado en el diccionario, lo inicializamos con un conteo de 1
-#     else:                                
-#         conteo_ojos[color_ojos] += 1    # Si el color de ojos ya ha sido registrado, incrementamos su conteo en 1
-        
-# for (color, conteo) in conteo_ojos.items(): # Imprimimos el conteo de cada color de ojos (clave, valor)
-#     print(f"Hay {conteo} superhéroes con ojos de color {color}.")
-
-# ###K. Determinar cuántos superhéroes tienen cada tipo de color de pelo.
-# conteo_color_pelo = {} #creamos el diccionario para almacenar el conteo de cada tipo de color de pelo
-
-# for personaje in lista_personajes:
-#     if  personaje["color_pelo"] == "":
-#         color = "No Tiene"
-#     else:        
-#         color = personaje["color_pelo"]
-
-#     if color in conteo_color_pelo:
-#         conteo_color_pelo[color] += 1 # Si el color_pelo no ha sido registrada en el diccionario, la inicializamos con una cantidad de 1
-#     else:
-#         conteo_color_pelo[color] = 1 # Si el color_pelo ya ha sido registrado, incrementamos su cantidad en 1
-        
-# for color, conteo in conteo_color_pelo.items():  #(clave, valor)(color es la clave, conteo el valor que toma con ese color de pelo) 
-#     print(f"Hay {conteo} superhéroes con el color de pelo {color}") # Se imprime el conteo para cada color de pelo.
-
-# ###L. Determinar cuántos superhéroes tienen cada tipo de inteligencia (En caso de no tener, Inicializarlo con ‘No Tiene’).
-
-# inteligencias = {}# Inicializar el diccionario de inteligencias
-
-# for personaje in lista_personajes:
-#     if personaje['inteligencia'] == '':
-#         inteligencia = 'No Tiene'
-#     else:
-#         inteligencia = personaje['inteligencia']
-
-#     if inteligencia in inteligencias:
-#         inteligencias[inteligencia] += 1 # Si la inteligencia no ha sido registrada en el diccionario, la inicializamos con una cantidad de 1
-#     else:
-#         inteligencias[inteligencia] = 1 # Si la inteligencia ya ha sido registrado, incrementamos su cantidad en 1
-
-# for inteligencia, cantidad in inteligencias.items():
-#     print(f"Hay {cantidad} superhéroes con inteligencia {inteligencia}")
-
-# ###M. Listar todos los superhéroes agrupados por color de ojos.
-# superheroes_por_color_ojos = {} # Crear diccionario vacío para almacenar héroes por color de ojos
-
-# for superheroe in lista_personajes:  ## Recorrer la lista de héroes y agregarlos al diccionario correspondiente al color de ojos
-#     color_ojos = superheroe['color_ojos']
-#     if color_ojos not in superheroes_por_color_ojos:
-#         superheroes_por_color_ojos[color_ojos] = []
-#     superheroes_por_color_ojos[color_ojos].append(superheroe['nombre'])
-
-# for color_ojos, superheroes in superheroes_por_color_ojos.items():  # Imprimir el resultado (color_ojos, superheroe)
-#     print(f"Superhéroes con ojos de color {color_ojos}: {', '.join(superheroes)}")
-
-
-# ###N. Listar todos los superhéroes agrupados por color de pelo.
-
-# heroes_por_pelo = {} # Crear diccionario vacío para almacenar héroes por color de pelo
-
-# for superheroe in lista_personajes: # Recorrer la lista de héroes y agregarlos al diccionario correspondiente al color de pelo
-#     pelo = superheroe['color_pelo'] or 'No Tiene'
-#     if pelo not in heroes_por_pelo:
-#         heroes_por_pelo[pelo] = []
-#     heroes_por_pelo[pelo].append(superheroe['nombre'])
-
-
-# for pelo, heroes in heroes_por_pelo.items():    # Imprimir el resultado
-#     print(f"Superhéroes con pelo de color {pelo}: {', '.join(heroes)}")
-
-# #O. Listar todos los superhéroes agrupados por tipo de inteligencia.
-
-# heroes_por_inteligencia = {}    # Crear diccionario vacío para almacenar héroes por tipo de inteligencia
-
-# for heroe in lista_personajes:  # Recorrer la lista de héroes y agregarlos al diccionario correspondiente al tipo de inteligencia
-#     inteligencia = heroe['inteligencia'] or 'No Tiene'
-#     if inteligencia not in heroes_por_inteligencia:
-#         heroes_por_inteligencia[inteligencia] = []
-#     heroes_por_inteligencia[inteligencia].append(heroe['nombre'])
-
-
-# for inteligencia, heroes in heroes_por_inteligencia.items(): # Imprimir el resultado
-#     print(f"Superhéroes con inteligencia {inteligencia}: {', '.join(heroes)}")
