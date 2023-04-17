@@ -18,9 +18,10 @@ def mostrar_superheroe_mas_alto():
     bandera_mas_alto = False
 
     for personaje in lista_personajes:
-        if bandera_mas_alto == False or (float(personaje['altura'])) > maxima_altura:
+        altura_personaje = float(personaje['altura'])
+        if bandera_mas_alto == False or altura_personaje > maxima_altura:
             bandera_mas_alto = True
-            maxima_altura = float(personaje['altura'])
+            maxima_altura = altura_personaje
             heroe_mas_alto = personaje['nombre']
                     
     print(f"El personaje mas alto es {heroe_mas_alto} y mide: {maxima_altura}m")
@@ -30,9 +31,10 @@ def mostrar_superheroe_mas_bajo():
     bandera_mas_bajo = False
 
     for personaje in lista_personajes:
-        if bandera_mas_bajo == False or (float(personaje['altura'])) < minima_altura:
+        altura_personaje = float(personaje['altura'])
+        if bandera_mas_bajo == False or altura_personaje < minima_altura:
             bandera_mas_bajo = True
-            minima_altura = float(personaje['altura'])   
+            minima_altura = altura_personaje  
             heroe_mas_bajo = personaje['nombre'] 
 
     print(f"El personaje mas bajo es {heroe_mas_bajo} y mide: {minima_altura}m")
@@ -42,7 +44,8 @@ def mostrar_promedio_alturas():
     contador_heroes = 0
 
     for personaje in lista_personajes:
-        acumulador_altura += float(personaje['altura'])
+        altura_personaje = float(personaje['altura'])
+        acumulador_altura += altura_personaje
         contador_heroes += 1
     print(f"La altura promedio de los superhéroes es: {acumulador_altura/contador_heroes:.2f}m")
 
@@ -53,9 +56,10 @@ def mostrar_superheroe_mas_pesado():
     bandera_mas_pesado = False
 
     for personaje in lista_personajes:
-        if bandera_mas_pesado == False or (float(personaje['peso'])) > maximo_peso:
+        altura_personaje = float(personaje['peso'])
+        if bandera_mas_pesado == False or altura_personaje > maximo_peso:
             bandera_mas_pesado = True
-            maximo_peso = float(personaje['peso'])
+            maximo_peso = altura_personaje
             heroe_mas_pesado = personaje['nombre']
     print(f"El superhéroe más pesado es {heroe_mas_pesado} y pesa: {maximo_peso}Kg")
 
@@ -64,9 +68,10 @@ def mostrar_superheroe_menos_pesado():
     bandera_menos_pesado = False
 
     for personaje in lista_personajes:
-        if bandera_menos_pesado == False or (float(personaje['peso'])) < minimo_peso:
+        altura_personaje = float(personaje['peso'])
+        if bandera_menos_pesado == False or altura_personaje < minimo_peso:
             bandera_menos_pesado = True
-            minimo_peso = float(personaje['peso'])
+            minimo_peso = altura_personaje
             heroe_menos_pesado = personaje['nombre']
     print(f"El superhéroe menos pesado es {heroe_menos_pesado} y pesa: {minimo_peso}Kg")
 
