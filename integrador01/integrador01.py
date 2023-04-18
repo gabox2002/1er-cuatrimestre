@@ -1,29 +1,73 @@
 from data_stark import lista_personajes
 from os import system
 
+'''
+    "nombre": "Howard the Duck",
+    "identidad": "Howard (Last name unrevealed)",
+    "empresa": "Marvel Comics",
+    "altura": "79.349999999999994",
+    "peso": "18.449999999999999",
+    "genero": "M",
+    "color_ojos": "Brown",
+    "color_pelo": "Yellow",
+    "fuerza": "2",
+    "inteligencia": ""
+'''
+def listar_superheroes(lista_personajes:list, clave:str = "", valor: int = 0):
+    print("Lista de superheroes: ") 
+
+    if (clave != "" and valor != ""):
+        for personaje in lista_personajes: # Recorremos la lista de superhéroes
+            if personaje[clave] == valor:
+                mostrar_superheroe(personaje)
+    else: 
+        for personaje in lista_personajes: 
+            mostrar_superheroe(personaje)
+
+def mostrar_superheroe(superheroe:dict):
+        print(f"Nombre: {superheroe['nombre']}, -",
+              f"Genero: {superheroe['genero']} -",
+              f"Altura: {float(superheroe['altura'])}m, -",
+              f"Peso: {float(superheroe['peso'])}kg") 
+
+       
+
+def calcular_maximo(lista:list, clave:str)->int:
+    maximo = 0
+    bandera_mas_alto = False
+    
+    if(type(lista) == list and len(lista) > 0 and type(clave) == str):
+        for personaje in lista:                              # Recorremos la lista de superhéroes
+            if personaje[clave] > maximo or bandera_mas_alto == False:
+                bandera_mas_alto = True
+                maximo = personaje[clave]
+                
+        return maximo
+
+
 def mostrar_superheroes_masculinos():
     print(f"Los superheroes masculinos son: ")
     for personaje in lista_personajes: # Recorremos la lista de superhéroes
         if personaje['genero'] == "M":
-            print(f"{'   ' + personaje['nombre']}")
+            mostrar_superheroe(personaje)
 
 def mostrar_superheroes_femeninos():
     print(f"Los superheroes femeninos son: ")
     for personaje in lista_personajes: # Recorremos la lista de superhéroes
         if personaje['genero'] == "F":
-            print(f"{'   ' + personaje['nombre']}")
+            mostrar_superheroe(personaje)
 
-def mostrar_superheroe_masculino_mas_alto():
-    mas_alto = ""
-    bandera_mas_alto = False
-    for personaje in lista_personajes: # Recorremos la lista de superhéroes
-        if personaje['genero'] == "M":
-            if bandera_mas_alto == False or float(personaje['altura']) > mas_alto:
-                bandera_mas_alto = True
-                mas_alto = float(personaje['altura'])
-                masculino_mas_alto = personaje['nombre']
+def mostrar_superheroe_masculino_mas_alto(lista:list):    
+    # for personaje in lista_personajes: # Recorremos la lista de superhéroes
+    #     if personaje['genero'] == "M":  
+    masculino_mas_alto = calcular_maximo(lista, "altura")
+    
+    if (masculino_mas_alto != 0):
+        print("El personaje masculino mas alto es: ")
+        listar_superheroes(lista, "altura", masculino_mas_alto)
+    else:
+        print("Ocurrio un error!")
 
-    print(f"El personaje masculino mas alto es {masculino_mas_alto} con {mas_alto}")
 
 def mostrar_superheroe_femenino_mas_alta():
     mas_alta = ""
@@ -319,14 +363,33 @@ def listar_superheroes_por_inteligencia():
 
 system("cls")
 while True:
-    respuesta = int(input("Informacion Superheroes:\n1. Superhéroes de género masculino.\n2. Superhéroes de género femenino.\n3. Superhéroe más alto de género Masculino.\n4. Superhéroe más alto de género Femenino.\n5. Superhéroe más bajo de género Masculino.\n6. Superhéroe más baja de género Femenino.\n7. Altura promedio de los superhéroes de género Masculino.\n8. Altura promedio de los superhéroes de género Fmenino.\n9. Nombre del superhéroe asociado a cada uno de los indicadores de altura por género.\n10. Determinar cuántos superhéroes tienen cada tipo de color de ojos.\n11. Determinar cuántos superhéroes tienen cada tipo de color de pelo.\n12. Determinar cuántos superhéroes tienen cada tipo de inteligencia.\n13. Listado de superhéroes agrupados por color de ojos.\n14. Listado de superhéroes agrupados por color de pelo.\n15. Listado de superhéroes agrupados por tipo de inteligencia.\n16. Salir \nElija una opción: "))
+    respuesta = int(input("""Informacion Superheroes:
+    0. Mostrar superheroes
+    1. Superhéroes de género masculino.
+    2. Superhéroes de género femenino.
+    3. Superhéroe más alto de género Masculino.
+    4. Superhéroe más alto de género Femenino.
+    5. Superhéroe más bajo de género Masculino.
+    6. Superhéroe más baja de género Femenino.
+    7. Altura promedio de los superhéroes de género Masculino.
+    8. Altura promedio de los superhéroes de género Fmenino.
+    9. Nombre del superhéroe asociado a cada uno de los indicadores de altura por género.
+    10. Determinar cuántos superhéroes tienen cada tipo de color de ojos.
+    11. Determinar cuántos superhéroes tienen cada tipo de color de pelo.
+    12. Determinar cuántos superhéroes tienen cada tipo de inteligencia.
+    13. Listado de superhéroes agrupados por color de ojos.
+    14. Listado de superhéroes agrupados por color de pelo.
+    15. Listado de superhéroes agrupados por tipo de inteligencia.
+    16. Salir \nElija una opción: """))
     match respuesta:
+        case 0:
+            listar_superheroes(lista_personajes)
         case 1:
             mostrar_superheroes_masculinos()
         case 2:
             mostrar_superheroes_femeninos()
         case 3:
-            mostrar_superheroe_masculino_mas_alto()
+            mostrar_superheroe_masculino_mas_alto(lista_personajes)
         case 4:
             mostrar_superheroe_femenino_mas_alta()
         case 5:
