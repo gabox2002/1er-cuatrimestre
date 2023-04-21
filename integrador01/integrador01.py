@@ -420,4 +420,3 @@ while True:
             listar_superheroes_por_inteligencia()
         case 19:
             break
-        
