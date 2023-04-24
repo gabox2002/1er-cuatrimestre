@@ -43,7 +43,6 @@ cadena = "314"
 print(cadena.zfill(6))  #000314
 
 #ISALPHA (devuelve True si todos los caracteres son alfebeticos sin numeros ni espacios, False de lo contrario)
-
 cadena = "HolaMundo"
 print(cadena.isalpha()) #True
 
@@ -51,7 +50,6 @@ cadena = "Hola Mundo"
 print(cadena.isalnum()) #False
 
 #ISDIGIT
-
 cadena = "123"
 print(cadena.isdigit()) #True
 
@@ -59,7 +57,6 @@ cadena = "Hola Mundo"
 print(cadena.isdecimal()) #False
 
 #COUNT (permite contar las veces que otra cadena se encuentra dentro de la primera)
-
 cadena = "Hola Mundo Hola"
 print(cadena.count("la")) #2
 
@@ -67,7 +64,6 @@ cadena = "Hola Mundo"
 print(cadena.count("la", 0, 2)) #2
 
 #FORMAT
-
 cadena = "Hola Mundo"
 print(cadena.format("Hola {0} {1} {2}")) #Hola Hola Mundo Hola Mundo
 
@@ -75,7 +71,6 @@ cadena = "Hola Mundo"
 print(cadena.format("Hola {0} {1} {2} {3}")) #Hola Hola Mundo Hola Mundo Hola Mundo
 
 #LEN
-
 cadena = "Hola Mundo"
 print(len(cadena)) #10
 
