@@ -18,18 +18,15 @@ def stark_normalizar_datos(lista_personajes):
         if personaje['fuerza'] != '':
             personaje['fuerza'] = int(personaje['fuerza'])
             datos_modificados = True
-            pass
             
         if personaje['altura'] != '':
             personaje['altura'] = float(personaje['altura'])
             datos_modificados = True
-            pass
             
         if personaje['peso'] != '':
             personaje['peso'] = float(personaje['peso'])
             datos_modificados = True
-            pass
-    
+            
     if datos_modificados:
         print("Datos normalizados")
     
