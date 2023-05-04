@@ -1,0 +1,3 @@
+lista_pokemones = [{'N° Pokedex': '149', 'Nombre': 'Dragonite', 'Tipo': ['Dragón', 'Volador'], 'Poder de Ataque': '134', 'Poder de Defensa': '95', 'Habilidades': ['Enjambre', 'Cambio color']}, {'N° Pokedex': '150', 'Nombre': 'Mewtwo', 'Tipo': ['Psíquico'], 'Poder de Ataque': '110', 'Poder de Defensa': '90', 'Habilidades': ['Presión', 'Ninguna']}, {'N° Pokedex': '151', 'Nombre': 'Mew', 'Tipo': ['Psíquico'], 'Poder de Ataque': '100', 'Poder de Defensa': '100', 'Habilidades': ['Sincronía', 'Ninguna']},{'N° Pokedex': '043', 'Nombre': 'Oddish', 'Tipo': ['Planta', 'Veneno'], 'Poder de Ataque': '50', 'Poder de Defensa': '55', 'Habilidades': ['Clorofila', 'Clorofila']}] 
+
+print(lista_pokemones)
