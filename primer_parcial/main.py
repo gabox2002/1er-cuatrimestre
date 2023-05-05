@@ -149,11 +149,23 @@ def listar_pokemones_ordenados(lista_pokemones):
         
     print("Lista de pokemones ordenados por poder de ataque:")
     for pokemon in lista_filtrada:
-        print(f"\t{pokemon['Nombre']} - Poder de Ataque: {pokemon['Poder de Ataque']}")
-    
-    
-    
+        print(f"""\tPoder de Ataque: {pokemon['Poder de Ataque']} - N° Pokedex: {pokemon['N° Pokedex']} - Nombre: {pokemon['Nombre']} - Tipo: {' y '.join(pokemon['Tipo'])} - Poder de Defensa: {pokemon['Poder de Defensa']} - Habilidades: {' y '.join(pokemon['Habilidades'])}""")
 
+
+
+
+# def parser_json(path:str)->list:
+#     with open(path,"r") as archivo:
+#         diccionario = json.load(archivo)
+#     return diccionario
+
+# def crear_archivo_json(path:str, lista_pokemones): #de la opcion 5
+#     pokemones_ordenados = listar_pokemones_ordenados(lista_pokemones)
+#     with open(path, 'w') as archivo:
+#         json.dump(pokemones_ordenados, archivo, indent=4)
+
+# lista = parser_json("data.json")
+# crear_archivo_json("nueva_lista.json", lista)
 
 
 def guardar_json(tipos, pokemones:list):
@@ -166,18 +178,15 @@ def guardar_json(tipos, pokemones:list):
         print(f"No hay pokemones del tipo {tipo}")
         return
     
-    pokemones_tipo = [pokemon for pokemon in pokemones if tipo in pokemon['Tipo']]
-    if not pokemones_tipo:
-        print(f"No hay pokemones del tipo {tipo}")
-        return
-
     # Creamos la lista con la información que queremos guardar en el JSON
     data = {}
     data["pokemon"] = []
     for pokemon in pokemones_tipo:
-        numero = pokemon['N° Pokedex']
-        nombre = pokemon['Nombre']
-        tipo = tipo = ", ".join(pokemon['Tipo'])
+        numero = str(pokemon['N° Pokedex']).zfill(3)
+        nombre = pokemon['Nombre'].replace('\u00ed', 'í')
+        tipos = list(pokemon['Tipo'])
+        tipo = pokemon['Tipo']
+        tipo = tipos[0] if len(tipos) == 1 else f"{tipos[0]},{tipos[1]}"
         ataque = int(pokemon['Poder de Ataque'])
         defensa = int(pokemon['Poder de Defensa'])
         if ataque == defensa:
@@ -185,14 +194,29 @@ def guardar_json(tipos, pokemones:list):
         else:
             tipo_poder = "Ataque" if ataque > defensa else "Defensa"
         poder = max(ataque, defensa)
-
-        data["pokemon"].append({"numero": numero, "nombre": nombre, "tipo": tipo, "ataque": ataque, "defensa": defensa, "poder": poder, "tipo_poder": tipo_poder})
+        
+        
+        descripcion = f"{nombre}-{poder}-{tipo_poder}"
+        registro = f"{numero},{nombre},{tipo},{ataque},{defensa}"
+        data["pokemon"].append([registro, descripcion])
+        
         
     # Guardamos el archivo
     filename = f"pokemones_{tipo}.json"
     with open(filename, 'w') as file:
         json.dump(data, file, indent=4)
     print(f"Archivo {filename} creado con éxito.")
+    return filename
+
+
+
+
+def leer_json(filename):
+    with open(filename, 'r') as file:
+        data = json.load(file)
+    
+    print(f"Listado de pokemones en el archivo {filename}:")
+    return data
 
 
 
@@ -239,9 +263,10 @@ def pokemon_app(pokemones):
             case 5:
                 listar_pokemones_ordenados(pokemones)
             case 6:
+                #crear_archivo_json(pokemones)
                 guardar_json(tipos, pokemones)
             case 7:
-                pass
+                leer_json(filename)
             case 8:
                 break
         
