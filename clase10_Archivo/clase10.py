@@ -272,7 +272,7 @@ import re
 def parser_csv(path:str) -> list:
     lista_temas = []
 
-    archivo = open(path, "r", enconding = "UTF-8")
+    archivo = open(path, "r", encoding = "UTF-8")
     for line in archivo:
         register = re.split(",|\n",line)
         tema = {}                           #corto en pedazos
