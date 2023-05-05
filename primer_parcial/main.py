@@ -1,106 +1,133 @@
 import re
+import json
 
-def traer_datos_desde_archivo(path:str) -> list:           #crea una lista a partir de un archivo
+def traer_datos_desde_archivo(path: str) -> list:
     lista_pokemones = []
-    
-    archivo = open(path, "r")
-    for line in archivo:
-        register = re.split(",|\n",line)
-        pokemon = {}
-        pokemon["N° Pokedex"]= register[0]
-        pokemon["Nombre"]= register[1]
-        pokemon["Tipo"]= register[2].split("/")
-        pokemon["Poder de Ataque"]= register[3]
-        pokemon["Poder de Defensa"]= register[4]
-        pokemon["Habilidades"]= register[5].split("|*|")
-        lista_pokemones.append(pokemon)   
-    archivo.close()
+    with open(path, "r") as archivo:
+        for line in archivo:
+            register = re.split(",|\n", line)
+            pokemon = {}
+            pokemon["N° Pokedex"] = register[0]
+            pokemon["Nombre"] = register[1]
+            pokemon["Tipo"] = register[2].split("/")
+            pokemon["Poder de Ataque"] = register[3]
+            pokemon["Poder de Defensa"] = register[4]
+            pokemon["Habilidades"] = register[5].split("|*|")
+            lista_pokemones.append(pokemon)
     return lista_pokemones
 
-# lista_pokemones = traer_datos_desde_archivo("pokemones.csv")
-# for pokemon in lista_pokemones:
-#     #print(f"{pokemon['N° Pokedex']} - {pokemon['Tipo']} - {pokemon['Habilidades']}")
-#     print(f"{pokemon['Tipo']}")
-    #print(lista_pokemones)
+def cargar_pokemones():
+    pokemones = []
+    tipos = set()
+    habilidades = set()
 
-
-# heroes_segun_color_pelo.csv (agrupados por color de pelo)
-# heroes_segun_color_ojos.csv (agrupados por color de ojos)
-
-#paso contrario escribir en un archivo lo que yo tengo en memoria
-# def generar_csv(path:str, lista:list):
-#     archivo = open(path, "w", encoding="UTF-8")
-#     for tema in lista:
-#         line = "{0},{1},{2},{3},{4},{5}"
-#         line = line.format(tema["N° Pokedex"], 
-#                            tema["Nombre"], 
-#                            tema["Tipo"], 
-#                            tema["Poder de Ataque"],
-#                            tema["Poder de Defensa"],
-#                            tema["Habilidades"])
-#         archivo.write(line)
-#     archivo.close()
-
-
-
-
-#'Nombre': 'Dragonair', 'Tipo': ['Dragón'], 'Poder de Ataque': '84', 'Poder de Defensa': '65', 'Habilidades': ['Enjambre', 'Cambio color']}, {'N° Pokedex': '149', 'Nombre': 'Dragonite', 'Tipo': ['Dragón', 'Volador'], 'Poder de Ataque': '134', 'Poder de Defensa': '95', 'Habilidades': ['Enjambre', 'Cambio color']}, {'N° Pokedex': '150', 'Nombre': 'Mewtwo', 'Tipo': ['Psíquico'], 'Poder de Ataque': '110', 'Poder de Defensa': '90', 'Habilidades': ['Presión', 'Ninguna']}, {'N° Pokedex': '151', 'Nombre': 'Mew', 'Tipo': ['Psíquico'], 'Poder de Ataque': '100', 'Poder de Defensa': '100', 'Habilidades': ['Sincronía', 'Ninguna']}] 
-
-def listar_cantidad_por_tipo(lista_pokemones):
-    tipos = {}
-
+    lista_pokemones = traer_datos_desde_archivo('pokemones.csv')
     for pokemon in lista_pokemones:
+        # Agregamos los tipos a su respectiva colección
         for tipo in pokemon['Tipo']:
-            if tipo in tipos:
-                tipos[tipo] += 1
-            else:
-                tipos[tipo] = 1
+            tipos.add(tipo)
+        # Agregamos las habilidades a su respectiva colección
+        for habilidad in pokemon['Habilidades']:
+            habilidades.add(habilidad)
+        # Agregamos el pokemon a la colección
+        pokemones.append(pokemon)
 
-    print("Cantidad de Pokemones por Tipo:")
+    print('Pokemones cargados exitosamente')
+    return pokemones, tipos, habilidades
+
+def listar_pokemones(pokemones):
+    for pokemon in pokemones:
+        print(f"{pokemon['N° Pokedex']}, {pokemon['Nombre']}, {'/'.join(pokemon['Tipo'])}, {pokemon['Poder de Ataque']}, {pokemon['Poder de Defensa']}, {'/'.join(pokemon['Habilidades'])}")
+
+def listar_tipos(tipos):
+    lista_tipos = []
     for tipo in tipos:
-        cantidad = tipos[tipo]
-        print(f"{tipo}: {cantidad}")
+        if tipo != list(tipos)[0]:
+            lista_tipos.append(tipo)
+    return lista_tipos
 
-# pokemones = traer_datos_desde_archivo("pokemones.csv")
-# listar_cantidad_por_tipo(pokemones)
+def listar_habilidades(habilidades):
+    lista_habilidades = []
+    for habilidad in habilidades:
+        lista_habilidades.append(habilidad)
+    return lista_habilidades
 
-def listar_pokemones_por_tipo(lista_pokemones, tipo):
-    for pokemon in lista_pokemones:
-        if tipo in pokemon['Tipo']:
-            print(pokemon['Nombre'] + ': ' + pokemon['Poder de Ataque'])
+def listar_cantidad_pokemones_por_tipo(pokemones):
+    cantidad_por_tipo = {}
 
-# lista_pokemones = traer_datos_desde_archivo("pokemones.csv")
-# listar_pokemones_por_tipo(lista_pokemones, "Fuego")
+    tipos = set()
+    for pokemon in pokemones:
+        for tipo in pokemon['Tipo']:
+            tipos.add(tipo)
+    lista_tipos = listar_tipos(tipos)
 
-def listar_pokemones_por_habilidad(lista_pokemones, habilidad):
-    pokemon_con_habilidad = []
-    for pokemon in lista_pokemones:
-        if habilidad in pokemon['Habilidades']:
-            poder_total = int(pokemon['Poder de Ataque']) + int(pokemon['Poder de Defensa'])
-            promedio_poder = poder_total / 2
-            pokemon_con_habilidad.append({
-                'Nombre': pokemon['Nombre'],
-                'Tipo': pokemon['Tipo'],
-                'Promedio de poder': promedio_poder
-            })
-    if pokemon_con_habilidad:
-        print(f"Los pokemones con la habilidad '{habilidad}' son:")
-        for pokemon in pokemon_con_habilidad:
-            print(f"Nombre: {pokemon['Nombre']}, Tipo: {pokemon['Tipo']}, Promedio de poder: {pokemon['Promedio de poder']}")
-    else:
-        print(f"No se encontraron pokemones con la habilidad '{habilidad}'")
+    for tipo in lista_tipos:
+        contador = 0
+        for pokemon in pokemones:
+            if tipo in pokemon['Tipo']:
+                contador += 1
+        cantidad_por_tipo[tipo] = contador
 
-# lista_pokemones = traer_datos_desde_archivo("pokemones.csv")
-# listar_pokemones_por_habilidad(lista_pokemones, "Clorofila")
+    print("Cantidad de pokemones por tipo:")
+    for tipo in cantidad_por_tipo:
+        if tipo != 'Tipo':
+            print(f"\t{tipo}: {cantidad_por_tipo[tipo]}")
 
 
+def listar_pokemones_por_tipo(pokemones):
     
+    tipos = set()
+    for pokemon in pokemones:
+        for tipo in pokemon['Tipo']:
+            tipos.add(tipo)
+    lista_tipos = listar_tipos(tipos)
+
+    for tipo in lista_tipos:
+        if tipo != "Tipo":
+            print(f"{tipo}:")
+            for pokemon in pokemones:
+                if tipo in pokemon['Tipo']:
+                    print(f"\t{pokemon['Nombre']} - Poder de Ataque: {pokemon['Poder de Ataque']}")
+
+def listar_pokemones_por_habilidad(pokemones):
+    habilidades = set()
+    for pokemon in pokemones:
+        for habilidad in pokemon['Habilidades']:
+            habilidades.add(habilidad)
+
+    habilidades_str = ', '.join(habilidades)
+    print(f"\tLas habilidades son: {habilidades_str}")
+
+    habilidad_buscada = input("\nIngrese la habilidad a buscar: ")
+    while habilidad_buscada not in habilidades:
+        print("La habilidad ingresada no es válida.")
+        habilidad_buscada = input("Ingrese la habilidad a buscar: ")
+
+    print(f"\nLista de pokemones con la habilidad '{habilidad_buscada}':")
+    pokemones_con_habilidad = []
+    for pokemon in pokemones:
+        if habilidad_buscada in pokemon['Habilidades']:
+            promedio_poder = (int(pokemon['Poder de Ataque']) + int(pokemon['Poder de Defensa'])) / 2
+            pokemones_con_habilidad.append({
+                "Nombre": pokemon['Nombre'],
+                "Tipo": "/".join(pokemon['Tipo']),
+                "Promedio de poder": promedio_poder
+            })
+    if len(pokemones_con_habilidad) == 0:
+        print("No se encontraron pokemones con la habilidad buscada.")
+    else:
+        for pokemon in pokemones_con_habilidad:
+            print(f"\t{pokemon['Nombre']} ({pokemon['Tipo']}) - Promedio de poder: {pokemon['Promedio de poder']:.2f}")
+
 def listar_pokemones_ordenados(lista_pokemones):
     '''
     Función que recibe como parámetro una lista de diccionarios llamada lista_pokemones y retorna una lista ordenada de diccionarios, donde los diccionarios están ordenados primero por su valor en la clave "Poder de Ataque", de menor a mayor. Si hay pokemones con el mismo valor de "Poder de Ataque", se ordenan por orden alfabético de sus nombres, de la A a la Z. Finalmente retorna la lista ordenada lista_filtrada.
     '''
     # Filtrar la lista para eliminar los elementos con valor no numérico en 'Poder de Ataque'
-    lista_filtrada = [pokemon for pokemon in lista_pokemones if pokemon['Poder de Ataque'].isdigit()]
+    lista_filtrada = []
+    for pokemon in lista_pokemones:
+        if pokemon['Poder de Ataque'].isdigit():
+            lista_filtrada.append(pokemon)
 
     # Ordenar la lista filtrada por 'Poder de Ataque' y en caso de empate, por 'Nombre'
     for i in range(len(lista_filtrada)-1):
@@ -117,14 +144,107 @@ def listar_pokemones_ordenados(lista_pokemones):
                     menor_ataque = j
         # Intercambiar el pokemon en el índice i con el pokemon con el menor 'Poder de Ataque'
         lista_filtrada[i], lista_filtrada[menor_ataque] = lista_filtrada[menor_ataque], lista_filtrada[i]
+        
+    print("Lista de pokemones ordenados por poder de ataque:")
+    for pokemon in lista_filtrada:
+        print(f"\t{pokemon['Nombre']} - Poder de Ataque: {pokemon['Poder de Ataque']}")
 
-    # Devolver la lista ordenada
-    return lista_filtrada
 
-# lista_pokemones = traer_datos_desde_archivo("pokemones.csv")
-# pokemones_ordenados = listar_pokemones_ordenados(lista_pokemones)
-# for pokemon in pokemones_ordenados:
-#     print(pokemon)
+def guardar_json(tipo: str, pokemones: list):
+    pokemones, tipos, habilidades = cargar_pokemones()
+    tipos = listar_tipos(tipos)
+    print(f"Tipos de Pokemon disponibles: {tipos}")
+
+    tipo_elegido = input("Ingrese el tipo de Pokemon para guardar como archivo JSON: ")
+    if tipo_elegido in tipos:
+        guardar_json(tipo_elegido, pokemones)
+    else:
+        print(f"El tipo de Pokemon {tipo_elegido} no es válido.")
+    
+    
+    pokemones_tipo = []
+    for pokemon in pokemones:
+        if tipo in pokemon["Tipo"]:
+            pokemon_tipo = {}
+            pokemon_tipo["Nombre"] = pokemon["Nombre"]
+            pokemon_tipo["Mayor Poder"] = max(
+                int(pokemon["Poder de Ataque"]),
+                int(pokemon["Poder de Defensa"])
+            )
+            pokemon_tipo["Tipo de Poder"] = "Ataque" if pokemon["Poder de Ataque"] > pokemon["Poder de Defensa"] else "Defensa"
+            pokemones_tipo.append(pokemon_tipo)
+
+    if not pokemones_tipo:
+        print(f"No se encontraron Pokemones del tipo {tipo}")
+        return
+
+    nombre_archivo = f"pokemones_{tipo}.json"
+    with open(nombre_archivo, "w") as archivo_json:
+        json.dump(pokemones_tipo, archivo_json, indent=4)
+
+    print(f"Archivo {nombre_archivo} guardado exitosamente.")
+
+
+
+
+
+
+
+
+
+def imprimir_menu():
+    '''
+    Funcion que imprime el menu de opciones por pantalla, y devuelve la opción elegida por el usuario, como un string.
+    '''
+    opciones = [
+        "Traer datos desde archivo",
+        "Listar cantidad por tipo",
+        "Listar pokemones por tipo",
+        "Listar pokemones por habilidad",
+        "Listar pokemones ordenados",
+        "Guardar Json",
+        "Leer Json",
+        "Salir del programa"
+    ]
+    for i in range(len(opciones)):
+        num_opcion = "{}".format(i + 1)  
+        print(f"{num_opcion}. {opciones[i]}")
+    while True:
+        seleccion = input("Ingrese el numero de la opcion que desea ejecutar: ")
+        if seleccion.isnumeric() and 1 <= int(seleccion) <= 8:
+            break
+        else:
+            print("Entrada inválida. Debe ingresar un número entero del 1 al 8.")
+    seleccion = int(seleccion)
+    print(f"Seleccionó la opción {seleccion}")
+    return seleccion
+
+def pokemon_app(pokemones):
+    while True:
+        print("\n****MENU POKEMON****")
+        opcion = imprimir_menu()
+        match opcion:
+            case 1:
+                pokemones, tipos, habilidades = cargar_pokemones()
+            case 2:
+                listar_cantidad_pokemones_por_tipo(pokemones)
+            case 3:
+                listar_pokemones_por_tipo(pokemones)
+            case 4:
+                listar_pokemones_por_habilidad(pokemones)
+            case 5:
+                listar_pokemones_ordenados(pokemones)
+            case 6:
+                pass
+            case 7:
+                pass
+            case 8:
+                break
+            case _:
+                print('Opción inválida, intente de nuevo.')
+        
+
+pokemon_app(listar_pokemones)
 
 import json
 
