@@ -94,25 +94,22 @@ def guardar_json(tipos, pokemones:list):
         
         
     # Guardamos el archivo
-    filename = f"pokemones_{tipo.lower()}.json"
-    with open(filename, 'w') as file:
+    with open("tipo_pokemones.json", 'w') as file:
         json.dump(data, file, indent=4)
-    print(f"El archivo {filename} se ha creado con éxito.")
+    print(f"El archivo tipo_pokemones.json se ha creado con éxito.")
     
 
 
 
 
-def leer_json(filename):
-    with open(filename, 'r') as file:
+def leer_json(path: str) -> dict:
+    with open(path, 'r') as file:
         data = json.load(file)
-    
-    print(f"Listado de pokemones en el archivo {filename}:")
-    filename = input("Ingrese el nombre del archivo JSON a leer: ")
-    data = leer_json(filename)
-    return data
-
-
+    print("Listado de pokemones en el archivo tipo_pokemones.json:")
+    resultado = []
+    for pokemon in data['pokemon']:
+        resultado.append(f"{pokemon[0].center(80)}\n{pokemon[1].center(80)}\n")
+    return '\n'.join(resultado)
 
 def imprimir_menu():
     '''
@@ -157,10 +154,11 @@ def pokemon_app(pokemones):
             case 5:
                 pass
             case 6:
-                #crear_archivo_json(pokemones)
                 guardar_json(tipos, pokemones)
             case 7:
-                datos = leer_json('mi_archivo.json')
+                path = "tipo_pokemones.json"
+                data = leer_json(path)
+                print(data)
             case 8:
                 break
         
